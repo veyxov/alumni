@@ -1,29 +1,18 @@
-"use client"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+export function Login() {
+  return (
+    <div>
+    <div className="grid w-full max-w-sm items-center gap-1.5">
+      <h2>Please login to continue</h2>
+      <Input type="email" id="email" placeholder="Email" />
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
+      <Input type="password" id="password" placeholder="Password" />
 
-export function ProfileForm() {
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
-  })
-
-  // 2. Define a submit handler.
-  function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-  }
+      <Button>Login</Button>
+    </div></div>
+  )
 }
 
