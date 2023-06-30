@@ -1,18 +1,55 @@
+"use client"
 import { Input } from "@/components/ui/input"
+import { useState } from "react"
+import toast, { Toaster } from 'react-hot-toast';
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/navigation'
 
 export function Login() {
-  return (
-    <div>
-    <div className="grid w-full max-w-sm items-center gap-1.5">
-      <h2>Please login to continue</h2>
-      <Input type="email" id="email" placeholder="Email" />
+    const [login, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const router = useRouter()
 
-      <Input type="password" id="password" placeholder="Password" />
+    async function handleLogin() {
+        var result = await getData();
 
-      <Button>Login</Button>
-    </div></div>
-  )
+        console.log({ password, email: login });
+    }
+    async function getData() {
+        // fetch with post method
+        const res = await fetch('http://localhost:5284/api/auth/login',
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ login, password })
+            })
+
+        if (!res.ok) {
+            // TODO: better log handling, maybe sentry? Or even a logging library
+            console.log('error: ', res);
+            toast.error('Login failed')
+        }
+
+        if (res.status === 200) {
+            toast.success('Login success')
+            router.push('/some')
+        }
+    }
+    return (
+        <div>
+            <Toaster />
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+                <h2>Please login to continue</h2>
+                <Input onChange={(e) => { setEmail(e.target.value) }} type="email" id="email" placeholder="Email" />
+
+                <Input onChange={(e) => { setPassword(e.target.value) }} type="password" id="password" placeholder="Password" />
+
+                <Button onClick={handleLogin}>Login</Button>
+            </div></div>
+    )
 }
+
 
