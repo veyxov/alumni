@@ -2,7 +2,6 @@
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import toast, { Toaster } from 'react-hot-toast';
-import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
 
@@ -15,9 +14,10 @@ export function Login() {
         var result = await getData();
 
         console.log({ password, email: login });
+        console.log('Login get data result: ' + result);
     }
     async function getData() {
-        // fetch with post method
+        try { // fetch with post method
         const res = await fetch('http://localhost:5284/api/auth/login',
             {
                 method: "POST",
@@ -30,12 +30,15 @@ export function Login() {
         if (!res.ok) {
             // TODO: better log handling, maybe sentry? Or even a logging library
             console.log('error: ', res);
-            toast.error('Login failed')
+            toast.error('Response is not ok: ' + res.statusText)
         }
 
         if (res.status === 200) {
             toast.success('Login success')
-            router.push('/some')
+            router.push('/') // Redirect to the home page
+        } } catch (ex) {
+            console.log(ex)
+            toast.error('Something went wrong, really wrong: ' + ex.message)
         }
     }
     return (
