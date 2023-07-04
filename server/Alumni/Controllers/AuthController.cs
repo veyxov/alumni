@@ -5,15 +5,22 @@ using Alumni.Models;
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly DataContext _centext;
+    private readonly DataContext _context;
+
+    public AuthController(DataContext context)
+    {
+        _context = context;
+    }
 
     // TODO
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginDto user)
     {
-        if (user.Login == "admin@admin.com" && user.Password.Length >= 1)
+        var foundUser = _context.Users.FirstOrDefault(u => u.Login == user.Login && u.Password == user.Password);
+        if (foundUser is not null)
         {
-            return Ok(new { token = "1234567890" });
+            // TODO: Generate jwt token and return
+            return Ok();
         }
 
         return Unauthorized();
@@ -25,7 +32,9 @@ public class AuthController : ControllerBase
         var user = new User { Login = registerDto.Login, Password = registerDto.Password };
 
         _context.Users.Add(user);
-        _centext.SaveChanges();
+        _context.SaveChanges();
+
+        return Ok(user);
     }
 }
 
