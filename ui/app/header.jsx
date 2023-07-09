@@ -12,7 +12,7 @@ export default function Header() {
                 Alumni Reviews
             </Link>
             {/* Add your logo here if needed */}
-            {loggin.IsLogged ? (
+            {!loggin.loggedIn ? (
                 <div>
                     <span className="mr-2">|</span>
                     <Link href="/login" className="text-black font-bold m-4">
