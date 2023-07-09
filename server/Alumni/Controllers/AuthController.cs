@@ -26,10 +26,10 @@ public class AuthController : ControllerBase
         return Unauthorized();
     }
 
-    [HttpPost("register")]
+    [HttpPost("register/personal-info")]
     public IActionResult Register([FromBody] RegisterDto registerDto)
     {
-        var user = new User { Login = registerDto.Login, Password = registerDto.Password };
+        var user = new User { Name = registerDto.Name, Login = registerDto.Email, Password = registerDto.Password };
 
         _context.Users.Add(user);
         _context.SaveChanges();
@@ -40,7 +40,8 @@ public class AuthController : ControllerBase
 
 public class RegisterDto
 {
-    public required string Login { get; set; }
+    public required string Email { get; set; }
+    public required string Name { get; set; }
     public required string Password { get; set; }
 }
 

@@ -2,9 +2,26 @@
 
 import React, { useState } from 'react';
 import RegisterLayout from './layoutSt';
+import toast, { Toaster } from 'react-hot-toast';
 
 const RegistrationPage = () => {
     const [stage, setStage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false)
+
+    const stages = [
+        {
+            title: "Personal Information",
+            description: "Enter your personal information",
+        },
+        {
+            title: "Education Information",
+            description: "Enter your education information",
+        },
+        {
+            title: "Job information",
+            description: "Enter your job information"
+        }
+    ]
 
     const [personalInfo, setPersonalInfo] = useState({
         name: '',
@@ -38,14 +55,37 @@ const RegistrationPage = () => {
         setJobInfo({ ...jobInfo, [e.target.name]: e.target.value });
     };
 
-    const handleNextStage = (e) => {
-        e.preventDefault()
-        setStage(stage + 1);
-    };
-
     const handlePreviousStage = (e) => {
         e.preventDefault()
         setStage(stage - 1);
+    };
+    const handleEducationInfo = async (e) => {
+
+    }
+
+    const handlePersonalInfoStage = async (e) => {
+        e.preventDefault()
+        setIsLoading(true)
+        try {
+            // send http post
+            const result = await fetch('http://localhost:5284/api/auth/register/personal-info', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(personalInfo)
+            })
+
+            if (result.status === 200) {
+                toast.success('Personal info saved')
+                setStage(stage + 1)
+            } else {
+                toast.error('Something went wrong: ' + result.statusText)
+            }
+        } catch (err) {
+            consloe.error(err)
+            toast.error(err)
+        } finally {
+            setIsLoading(false)
+        }
     };
 
     const handleSubmit = (e) => {
@@ -59,9 +99,9 @@ const RegistrationPage = () => {
             case 1:
                 return (
                     <>
-                        <form onSubmit={handleNextStage}>
+                        <form onSubmit={handlePersonalInfoStage}>
                             <div className="mb-4">
-                                <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="name" className="block text-black font-bold mb-2">
                                     Name
                                 </label>
                                 <input
@@ -74,7 +114,7 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="email" className="block text-black font-bold mb-2">
                                     Email
                                 </label>
                                 <input
@@ -87,7 +127,7 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="password" className="block text-black font-bold mb-2">
                                     Password
                                 </label>
                                 <input
@@ -100,7 +140,7 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-6">
-                                <label htmlFor="confirmPassword" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="confirmPassword" className="block text-black font-bold mb-2">
                                     Confirm Password
                                 </label>
                                 <input
@@ -116,7 +156,7 @@ const RegistrationPage = () => {
                                 type="submit"
                                 className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
                             >
-                                Next
+                                {isLoading ? 'Loading...' : 'Next'}
                             </button>
                         </form>
                     </>
@@ -124,10 +164,9 @@ const RegistrationPage = () => {
             case 2:
                 return (
                     <>
-                        <h2 className="text-2xl font-bold mb-4">Education Information</h2>
-                        <form onSubmit={handleNextStage}>
+                        <form onSubmit={handleEducationInfo}>
                             <div className="mb-4">
-                                <label htmlFor="university" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="university" className="block text-black font-bold mb-2">
                                     University
                                 </label>
                                 <input
@@ -140,7 +179,7 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="degree" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="degree" className="block text-black font-bold mb-2">
                                     Degree
                                 </label>
                                 <input
@@ -153,7 +192,7 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="graduationYear" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="graduationYear" className="block text-black font-bold mb-2">
                                     Graduation Year
                                 </label>
                                 <input
@@ -173,7 +212,7 @@ const RegistrationPage = () => {
                             </button>
                             <button
                                 type="button"
-                                className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md ml-2 hover:bg-gray-400"
+                                className="bg-gray-300 text-black py-2 px-4 rounded-md ml-2 hover:bg-gray-400"
                                 onClick={handlePreviousStage}
                             >
                                 Previous
@@ -184,10 +223,9 @@ const RegistrationPage = () => {
             case 3:
                 return (
                     <>
-                        <h2 className="text-2xl font-bold mb-4">Job Information</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4">
-                                <label htmlFor="company" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="company" className="block text-black font-bold mb-2">
                                     Company
                                 </label>
                                 <input
@@ -200,7 +238,7 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="position" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="position" className="block text-black font-bold mb-2">
                                     Position
                                 </label>
                                 <input
@@ -213,7 +251,7 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="startDate" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="startDate" className="block text-black font-bold mb-2">
                                     Start Date
                                 </label>
                                 <input
@@ -226,7 +264,7 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-6">
-                                <label htmlFor="endDate" className="block text-gray-700 font-bold mb-2">
+                                <label htmlFor="endDate" className="block text-black font-bold mb-2">
                                     End Date
                                 </label>
                                 <input
@@ -246,7 +284,7 @@ const RegistrationPage = () => {
                             </button>
                             <button
                                 type="button"
-                                className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md ml-2 hover:bg-gray-400"
+                                className="bg-gray-300 text-black py-2 px-4 rounded-md ml-2 hover:bg-gray-400"
                                 onClick={handlePreviousStage}
                             >
                                 Previous
@@ -260,9 +298,12 @@ const RegistrationPage = () => {
     };
 
     return (
-        <RegisterLayout step={stage}>
-            <div className="container mx-auto py-8">{renderStage()}</div>
-        </RegisterLayout>
+        <>
+            <Toaster />
+            <RegisterLayout step={stage} title={stages[stage - 1].title} description={stages[stage - 1].description}>
+                <div className="container mx-auto py-8">{renderStage()}</div>
+            </RegisterLayout>
+        </>
     );
 };
 
