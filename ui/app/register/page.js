@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import RegisterLayout from './layoutSt';
 import toast, { Toaster } from 'react-hot-toast';
+import { cookies } from 'next/headers'
 
 const RegistrationPage = () => {
     const [stage, setStage] = useState(1);
@@ -76,13 +77,19 @@ const RegistrationPage = () => {
 
             if (result.status === 200) {
                 toast.success('Personal info saved')
+
+                // save the token to local storage
+                localStorage.setItem('token', result.token)
+
+
+                console.dir(result)
                 setStage(stage + 1)
             } else {
                 toast.error('Something went wrong: ' + result.statusText)
             }
         } catch (err) {
-            consloe.error(err)
-            toast.error(err)
+            console.error(err)
+            //toast.error(err)
         } finally {
             setIsLoading(false)
         }
