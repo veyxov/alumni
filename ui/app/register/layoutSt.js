@@ -1,5 +1,6 @@
+"use client"
+
 export default function RegisterLayout(props) {
-    console.log(props);
     return (
         <div className="flex">
             <div className="w-1/3 bg-slate-600">

@@ -1,3 +1,5 @@
+"use client"
+
 export default function Home() {
     const reviewsData = [
         { id: 1, name: 'John Doe', position: 'Chief programmer in Netflix', image: "https://api.minimalavatars.com/avatar/random/png", rating: 5 },
