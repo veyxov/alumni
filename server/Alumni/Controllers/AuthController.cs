@@ -16,7 +16,7 @@ public class AuthController : ControllerBase
             ? throw new Exception("Unauthorized")
             : int.Parse(
                 HttpContext
-                    ?.User?.Claims?.Where(x => x.Type == ClaimTypes.NameIdentifier)
+                    ?.User?.Claims?.Where(x => x.Type == "Id")
                     .Select(x => x.Value)
                     .First() ?? throw new Exception("Unauthorized")
             );
@@ -36,34 +36,39 @@ public class AuthController : ControllerBase
         {
             if (foundUser.Password == user.Password)
             {
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(
-                        new[]
-                        {
-                            new Claim("Id", foundUser.Id.ToString()),
-                            new Claim(JwtRegisteredClaimNames.Sub, user.Login)
-                        }
-                    ),
-                    Expires = DateTime.UtcNow.AddMinutes(5),
-                    Issuer = "issuer",
-                    Audience = "audience",
-                    SigningCredentials = new SigningCredentials(
-                        new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(
-                                "some_development_token_that_should_not_be_used_in_production"
-                            )
-                        ),
-                        SecurityAlgorithms.HmacSha512Signature
-                    )
-                };
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                return Ok(tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor)));
+                return Ok(GenerateJwt(user.Login, foundUser.Id.ToString()));
             }
         }
 
         return Unauthorized();
+    }
+
+    private static string GenerateJwt(string login, string id)
+    {
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(
+                new[]
+                {
+                            new Claim("Id", id),
+                            new Claim(JwtRegisteredClaimNames.Sub, login)
+                }
+            ),
+            Expires = DateTime.UtcNow.AddMinutes(5),
+            Issuer = "issuer",
+            Audience = "audience",
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(
+                        "some_development_token_that_should_not_be_used_in_production"
+                    )
+                ),
+                SecurityAlgorithms.HmacSha512Signature
+            )
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
     }
 
     [HttpPost("register/personal-info")]
@@ -79,7 +84,12 @@ public class AuthController : ControllerBase
         _context.Users.Add(user);
         _context.SaveChanges();
 
-        return Ok(user);
+        return Ok(new
+        {
+            Name = registerDto.Name,
+            Login = registerDto.Email,
+            Token = GenerateJwt(registerDto.Email, user.Id.ToString())
+        });
     }
 
     [Authorize]

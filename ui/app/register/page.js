@@ -34,9 +34,9 @@ const RegistrationPage = () => {
     });
 
     const [educationInfo, setEducationInfo] = useState({
-        university: '',
+        universityName: '',
         degree: '',
-        graduationYear: '',
+        graduationDate: '',
     });
 
     const [jobInfo, setJobInfo] = useState({
@@ -66,11 +66,17 @@ const RegistrationPage = () => {
         e.preventDefault()
         setIsLoading(true)
         try {
+            // NOTE: Convert graduation date to date object
+            educationInfo.graduationDate = new Date(educationInfo.graduationDate)
+
             console.log(educationInfo)
             // send http post
             const result = await fetch('http://localhost:5284/api/auth/register/education-info', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
                 body: JSON.stringify(educationInfo)
             })
 
@@ -102,7 +108,7 @@ const RegistrationPage = () => {
             // send http post
             const result = await fetch('http://localhost:5284/api/auth/register/personal-info', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'accept': '*/*' },
                 body: JSON.stringify(personalInfo)
             })
 
@@ -205,15 +211,15 @@ const RegistrationPage = () => {
                     <>
                         <form onSubmit={handleEducationInfo}>
                             <div className="mb-4">
-                                <label htmlFor="university" className="block text-black font-bold mb-2">
+                                <label htmlFor="universityName" className="block text-black font-bold mb-2">
                                     University
                                 </label>
                                 <input
                                     type="text"
-                                    id="university"
-                                    name="university"
+                                    id="universityName"
+                                    name="universityName"
                                     className="w-full border border-gray-300 px-3 py-2 rounded-md"
-                                    value={educationInfo.university}
+                                    value={educationInfo.universityName}
                                     onChange={handleEducationInfoChange}
                                 />
                             </div>
@@ -231,15 +237,15 @@ const RegistrationPage = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="graduationYear" className="block text-black font-bold mb-2">
+                                <label htmlFor="graduationDate" className="block text-black font-bold mb-2">
                                     Graduation Year
                                 </label>
                                 <input
                                     type="text"
-                                    id="graduationYear"
-                                    name="graduationYear"
+                                    id="graduationDate"
+                                    name="graduationDate"
                                     className="w-full border border-gray-300 px-3 py-2 rounded-md"
-                                    value={educationInfo.graduationYear}
+                                    value={educationInfo.graduationDate}
                                     onChange={handleEducationInfoChange}
                                 />
                             </div>
