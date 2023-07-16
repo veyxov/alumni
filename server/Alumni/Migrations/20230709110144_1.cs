@@ -15,15 +15,14 @@ namespace Alumni.Migrations
                 table: "Users",
                 type: "TEXT",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Name",
-                table: "Users");
+            migrationBuilder.DropColumn(name: "Name", table: "Users");
         }
     }
 }

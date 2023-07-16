@@ -7,4 +7,7 @@ public sealed class DataContext : DbContext
         : base(options) { }
 
     public DbSet<User> Users => Set<User>();
+
+    public DbSet<University> Universities => Set<University>();
+    public DbSet<EducationInfo> EducationInfos => Set<EducationInfo>();
 }

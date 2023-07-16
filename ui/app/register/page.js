@@ -66,11 +66,12 @@ const RegistrationPage = () => {
         e.preventDefault()
         setIsLoading(true)
         try {
+            console.log(educationInfo)
             // send http post
             const result = await fetch('http://localhost:5284/api/auth/register/education-info', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(personalInfo)
+                body: JSON.stringify(educationInfo)
             })
 
             if (result.status === 200) {
@@ -78,10 +79,10 @@ const RegistrationPage = () => {
                 // save the token to local storage
 
                 const data = await result.json()
+                console.log("Educatino info saving: " + data);
 
-                console.log(data)
-                localStorage.setItem('token', data.token)
-                dispatch(login(data.token))
+                // TODO: Dispatch something?
+                // dispatch(login(data.token))
                 setStage(stage + 1)
             } else {
                 toast.error('Something went wrong: ' + result.statusText)
