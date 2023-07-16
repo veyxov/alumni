@@ -25,6 +25,20 @@ To get started with the Alumni Reviews Web Application, follow these steps:
 5. 🌐 Open your browser and visit: `http://localhost:3000`
 
 
+## How to start 🆕
+
+### Ui
+```shell
+cd alumni/ui
+npm run dev
+```
+
+### Server
+```shell
+cd alumni/server/Alumni
+dotnet watch run -y
+```
+
 ## 🤝 Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
