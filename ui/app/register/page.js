@@ -1,13 +1,15 @@
 "use client"
 
-import React, { useState } from 'react';
 import RegisterLayout from './layoutSt';
 import toast, { Toaster } from 'react-hot-toast';
-import { cookies } from 'next/headers'
+import { useDispatch } from 'react-redux'
+import { login } from '../GlobalRedux/slice'
+import { useState } from 'react';
 
 const RegistrationPage = () => {
     const [stage, setStage] = useState(1);
     const [isLoading, setIsLoading] = useState(false)
+    const dispatch = useDispatch()
 
     const stages = [
         {
@@ -61,7 +63,35 @@ const RegistrationPage = () => {
         setStage(stage - 1);
     };
     const handleEducationInfo = async (e) => {
+        e.preventDefault()
+        setIsLoading(true)
+        try {
+            // send http post
+            const result = await fetch('http://localhost:5284/api/auth/register/education-info', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(personalInfo)
+            })
 
+            if (result.status === 200) {
+                toast.success('Education info saved')
+                // save the token to local storage
+
+                const data = await result.json()
+
+                console.log(data)
+                localStorage.setItem('token', data.token)
+                dispatch(login(data.token))
+                setStage(stage + 1)
+            } else {
+                toast.error('Something went wrong: ' + result.statusText)
+            }
+        } catch (err) {
+            console.error(err)
+            //toast.error(err)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const handlePersonalInfoStage = async (e) => {
@@ -77,12 +107,13 @@ const RegistrationPage = () => {
 
             if (result.status === 200) {
                 toast.success('Personal info saved')
-
                 // save the token to local storage
-                localStorage.setItem('token', result.token)
 
+                const data = await result.json()
 
-                console.dir(result)
+                console.log(data)
+                localStorage.setItem('token', data.token)
+                dispatch(login(data.token))
                 setStage(stage + 1)
             } else {
                 toast.error('Something went wrong: ' + result.statusText)
