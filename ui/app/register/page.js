@@ -1,9 +1,7 @@
 "use client"
-import React from 'react';
-import ReactLoading from 'react-loading';
 
-const Page = ({ type, color }) => (
-	<ReactLoading type={type} color={color} height={667} width={375} />
-);
+const Page = () => {
+    return (<>Where I'm I?</>)
+};
 
 export default Page;
