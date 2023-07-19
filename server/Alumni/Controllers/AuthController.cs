@@ -15,10 +15,8 @@ public class AuthController : ControllerBase
         HttpContext.User.Identity is not ClaimsIdentity identity
             ? throw new Exception("Unauthorized")
             : int.Parse(
-                HttpContext
-                    ?.User?.Claims?.Where(x => x.Type == "Id")
-                    .Select(x => x.Value)
-                    .First() ?? throw new Exception("Unauthorized")
+                HttpContext?.User?.Claims?.Where(x => x.Type == "Id").Select(x => x.Value).First()
+                    ?? throw new Exception("Unauthorized")
             );
 
     public AuthController(DataContext context)
@@ -48,11 +46,7 @@ public class AuthController : ControllerBase
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(
-                new[]
-                {
-                            new Claim("Id", id),
-                            new Claim(JwtRegisteredClaimNames.Sub, login)
-                }
+                new[] { new Claim("Id", id), new Claim(JwtRegisteredClaimNames.Sub, login) }
             ),
             Expires = DateTime.UtcNow.AddMinutes(5),
             Issuer = "issuer",
@@ -84,12 +78,14 @@ public class AuthController : ControllerBase
         _context.Users.Add(user);
         _context.SaveChanges();
 
-        return Ok(new
-        {
-            Name = registerDto.Name,
-            Login = registerDto.Email,
-            Token = GenerateJwt(registerDto.Email, user.Id.ToString())
-        });
+        return Ok(
+            new
+            {
+                Name = registerDto.Name,
+                Login = registerDto.Email,
+                Token = GenerateJwt(registerDto.Email, user.Id.ToString())
+            }
+        );
     }
 
     [Authorize]
