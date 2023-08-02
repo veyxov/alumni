@@ -1,8 +1,7 @@
 "use client"
+
 import RegisterLayout from './../layoutSt.js';
 import toast, { Toaster } from 'react-hot-toast';
-import { useDispatch } from 'react-redux'
-import { login } from '../../GlobalRedux/slice'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation.js';
 
@@ -60,6 +59,7 @@ export default function Page() {
 
     return (
         <RegisterLayout step="Second" title="education information">
+            <Toaster />
             <form onSubmit={handleEducationInfo}>
                 <div className="mb-4">
                     <label htmlFor="universityName" className="block text-black font-bold mb-2">

@@ -22,6 +22,9 @@ export default function Page() {
     const handlePersonalInfoChange = (e) => {
         setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value });
     };
+    const handleSubmit = (e) => {
+    }
+
     const handlePersonalInfoStage = async (e) => {
         e.preventDefault()
         setIsLoading(true)
