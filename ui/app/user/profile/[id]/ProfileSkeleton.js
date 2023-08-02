@@ -22,9 +22,9 @@ export function ProfileSkeleton() {
             <Skeleton className="w-full h-44" />
 
             <div className="mt-8">
-                <div class="inline-flex items-center justify-center w-full">
+                <div className="inline-flex items-center justify-center w-full">
                     <Skeleton className="w-32 h-4 rounded-full" />
-                    <hr class="ml-2 w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
+                    <hr className="ml-2 w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
                 </div>
 
                 <div className="">
@@ -52,7 +52,7 @@ export function ProfileSkeleton() {
                     <Skeleton className="w-24 h-6 rounded-full mb-2 bg-red-50" />
                     <Skeleton className="w-24 h-6 rounded-full mb-2 bg-red-50" />
                 </div>
-                <hr class="ml-2 w-full h-px bg-gray-200 border-0 dark:bg-gray-700" />
+                <hr className="ml-2 w-full h-px bg-gray-200 border-0 dark:bg-gray-700" />
                 <div className="mx-4 my-8">
                     <Skeleton className="mt-2 w-72 h-2 bg-gray-300 rounded-lg " />
                     <Skeleton className="mt-2 w-44 h-2 bg-gray-300 rounded-lg " />
