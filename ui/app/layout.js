@@ -6,11 +6,6 @@ import { Providers } from "./GlobalRedux/provider"
 
 import Header from './header'
 
-export const metadata = {
-    title: 'Alumni',
-    description: 'Alumni review application',
-}
-
 export default function RootLayout({ children }) {
     return (
 
