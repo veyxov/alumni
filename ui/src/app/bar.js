@@ -93,7 +93,7 @@ export default function Bar() {
                         </ul>
                         {/*      <!-- Actions --> */}
                         <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
-                            <button > Login </button>
+                            <Link href="/auth/login">Login</Link>
                         </div>
                     </nav>
                 </div>
