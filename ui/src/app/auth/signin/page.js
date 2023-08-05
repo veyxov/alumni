@@ -5,6 +5,7 @@ import { useState } from "react"
 export default function Page() {
     const [firstName, setFirstName] = useState(null)
     const [lastName, setLastName] = useState(null)
+    const [email, setEmail] = useState(null)
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -12,6 +13,7 @@ export default function Page() {
         const payload = {
             firstName: firstName,
             lastName: lastName,
+            email: email,
         }
 
         console.warn(payload)
@@ -65,6 +67,7 @@ export default function Page() {
                                 onInput={(e) => {
                                     setFirstName(e.target.value)
                                 }}
+                                value="Test"
                             />
                         </div>
 
@@ -97,6 +100,9 @@ export default function Page() {
                                 id="Email"
                                 name="email"
                                 className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                onInput={(e) => {
+                                    setEmail(e.target.value)
+                                }}
                             />
                         </div>
 
