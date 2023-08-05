@@ -4,9 +4,13 @@ import Link from "next/link"
 
 import React from "react"
 
+import { useRouter } from 'next/navigation'
+
 export default function Page() {
     const [login, setLogin] = React.useState(null)
     const [password, setPassword] = React.useState(null)
+
+    const router = useRouter()
 
     async function onLogin() {
         var payload = {
@@ -29,6 +33,8 @@ export default function Page() {
             console.log(data)
 
             saveToken(data.token)
+
+            router.push('/profile')
         } else {
         console.warn(response)
         }
