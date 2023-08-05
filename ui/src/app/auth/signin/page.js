@@ -6,13 +6,14 @@ export default function Page() {
     const [firstName, setFirstName] = useState(null)
     const [lastName, setLastName] = useState(null)
     const [email, setEmail] = useState(null)
+    const [password, setPassword] = useState(null)
 
     function handleSubmit(event) {
         event.preventDefault()
 
         const payload = {
-            firstName: firstName,
-            lastName: lastName,
+            name: `${firstName} ${lastName}`,
+            password: password,
             email: email,
         }
 
@@ -53,26 +54,6 @@ export default function Page() {
                     <form action="#" className="mt-8 grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
                             <label
-                                htmlFor="FirstName"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                First Name
-                            </label>
-
-                            <input
-                                type="text"
-                                id="FirstName"
-                                name="first_name"
-                                className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                                onInput={(e) => {
-                                    setFirstName(e.target.value)
-                                }}
-                                value="Test"
-                            />
-                        </div>
-
-                        <div className="col-span-6 sm:col-span-3">
-                            <label
                                 htmlFor="LastName"
                                 className="block text-sm font-medium text-gray-700"
                             >
@@ -84,11 +65,31 @@ export default function Page() {
                                 id="LastName"
                                 name="last_name"
                                 className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                                onInput={(e) => {
+                                onChange={(e) => {
                                     setLastName(e.target.value)
                                 }}
                             />
                         </div>
+
+                        <div className="col-span-6 sm:col-span-3">
+                            <label
+                                htmlFor="FirstName"
+                                className="block text-sm font-medium text-gray-700"
+                            >
+                                First Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="FirstName"
+                                name="first_name"
+                                className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                onChange={(e) => {
+                                    setFirstName(e.target.value)
+                                }}
+                            />
+                        </div>
+
 
                         <div className="col-span-6">
                             <label htmlFor="Email" className="block text-sm font-medium text-gray-700">
@@ -100,7 +101,7 @@ export default function Page() {
                                 id="Email"
                                 name="email"
                                 className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                                onInput={(e) => {
+                                onChange={(e) => {
                                     setEmail(e.target.value)
                                 }}
                             />
@@ -119,6 +120,9 @@ export default function Page() {
                                 id="Password"
                                 name="password"
                                 className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+                                }}
                             />
                         </div>
 
