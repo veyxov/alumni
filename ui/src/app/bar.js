@@ -20,6 +20,10 @@ export default function Bar() {
         { name: "Contact", href: "/contact" },
     ]
 
+    let token = localStorage.getItem("token")
+    let hasToken = token != null
+    console.log(token)
+
     return (
         <>
             {/*<!-- Header --> */}
@@ -93,7 +97,11 @@ export default function Bar() {
                         </ul>
                         {/*      <!-- Actions --> */}
                         <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
+        {!hasToken ? 
                             <Link href="/auth/login">Login</Link>
+            :
+                            <Link href="/auth/logout">Logout</Link>
+        }
                         </div>
                     </nav>
                 </div>

@@ -65,7 +65,7 @@ public class AuthController : ControllerBase
         return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
     }
 
-    [HttpPost("register/personal-info")]
+    [HttpPost("signup")]
     public IActionResult Register([FromBody] RegisterDto registerDto)
     {
         var user = new User

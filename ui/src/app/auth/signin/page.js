@@ -8,13 +8,31 @@ export default function Page() {
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault()
 
         const payload = {
             name: `${firstName} ${lastName}`,
             password: password,
             email: email,
+        }
+
+        const result = await fetch("http://localhost:5284/api/auth/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        })
+
+        if (result.ok) {
+            const data = await result.json()
+            console.log(data)
+
+            const token = data.token
+            localStorage.setItem("token", token)
+        } else {
+            console.error(result)
         }
 
         console.warn(payload)
