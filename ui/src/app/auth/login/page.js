@@ -1,6 +1,44 @@
+"use client"
+
 import Link from "next/link"
 
+import React from "react"
+
 export default function Page() {
+    const [login, setLogin] = React.useState(null)
+    const [password, setPassword] = React.useState(null)
+
+    async function onLogin() {
+        var payload = {
+            login: login,
+            password: password
+        }
+
+        console.log(payload)
+
+        const response = await fetch('http://localhost:5284/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+
+        if (response.ok) {
+            const data = await response.json()
+            console.log(data)
+
+            saveToken(data.token)
+        } else {
+        console.warn(response)
+        }
+
+
+        function saveToken(token) {
+            // TODO: are there better metods? Redux?
+            localStorage.setItem('token', token)
+        }
+    }
 
     return (
         <section className="bg-white">
@@ -27,7 +65,7 @@ export default function Page() {
                                     id="Email"
                                     name="email"
                                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                                    value="test@test.com" // TODO: Remove
+                                    onChange={e => setLogin(e.target.value)}
                                 />
                             </div>
 
@@ -44,7 +82,7 @@ export default function Page() {
                                     id="Password"
                                     name="password"
                                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                                    value="testPassword6240" // TODO: Remove
+                                    onChange={e => setPassword(e.target.value)}
                                 />
                             </div>
 
@@ -52,6 +90,7 @@ export default function Page() {
                             <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                                 <button
                                     className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                                    onClick={onLogin}
                                 >
                                     Login
                                 </button>

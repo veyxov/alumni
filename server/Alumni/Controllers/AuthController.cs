@@ -34,7 +34,8 @@ public class AuthController : ControllerBase
         {
             if (foundUser.Password == user.Password)
             {
-                return Ok(GenerateJwt(user.Login, foundUser.Id.ToString()));
+                var token = GenerateJwt(user.Login, foundUser.Id.ToString());
+                return Ok(new {token = token});
             }
         }
 
