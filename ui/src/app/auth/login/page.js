@@ -6,6 +6,8 @@ import React from "react"
 
 import { useRouter } from 'next/navigation'
 
+import {Toaster, toast} from "react-hot-toast"
+
 export default function Page() {
     const [login, setLogin] = React.useState(null)
     const [password, setPassword] = React.useState(null)
@@ -36,7 +38,8 @@ export default function Page() {
 
             router.push('/profile')
         } else {
-        console.warn(response)
+            toast.error(response.statusText)
+            console.warn(response)
         }
 
 
@@ -48,6 +51,7 @@ export default function Page() {
 
     return (
         <section className="bg-white">
+            <Toaster />
             <div className="">
                 <main
                     className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
