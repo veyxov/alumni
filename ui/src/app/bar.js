@@ -18,6 +18,7 @@ export default function Bar() {
         { name: "Home", href: "/" },
         { name: "About", href: "/about" },
         { name: "Contact", href: "/contact" },
+        { name: "Profile", href: "/auth/profile" },
     ]
 
     let token = localStorage.getItem('token')
