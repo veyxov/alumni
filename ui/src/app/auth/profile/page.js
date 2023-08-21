@@ -1,4 +1,9 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton";
+import { Toaster, toast } from "react-hot-toast";
+import jwt_decode from "jwt-decode";
 
 const WorkInfoSkeleton = () => {
     return (
@@ -66,7 +71,29 @@ function ProfileSkeleton() {
 }
 
 export default function Page() {
+    const [userPersonalData, setUserPersonalData] = useState(null);
+
+    function getUserIdFromJwt() {
+        const token = localStorage.getItem('token');
+
+        const id = jwt_decode(token);
+
+        toast.success(`Welcome ${id.sub}!`);
+    }
+    const asyncFetch = async () => {
+        const id = getUserIdFromJwt();
+        const response = await fetch('http://localhost:5284/api/User/${id}/personal-info');
+
+    }
+
+    useEffect(() => {
+        asyncFetch();
+    }, []);
+
     return (
-        <ProfileSkeleton />
+        <div>
+            <Toaster />
+            <ProfileSkeleton />
+        </div>
     );
 }
