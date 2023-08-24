@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster, toast } from "react-hot-toast";
@@ -118,7 +119,7 @@ function Profile({ data }) {
             <div className="mt-8 flex flex-row gap-2">
                 <button className="mt-2 rounded p-3 bg-blue-100 text-black">Send message</button>
                 <button className="mt-2 rounded p-3 bg-blue-300 text-blue-500">Contacts</button>
-                <button className="mt-2 rounded p-3 bg-gray-300 text-gray-700">Report</button>
+                <Link href="/auth/profile/edit" className="mt-2 rounded p-3 bg-gray-300 text-gray-700">Report</Link>
             </div>
 
             <div className="mt-12">
