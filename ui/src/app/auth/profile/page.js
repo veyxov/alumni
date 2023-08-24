@@ -154,6 +154,7 @@ export default function Page() {
 
         return jwt.Id;
     }
+
     const asyncFetch = async () => {
         const id = getUserIdFromJwt();
         const response = await fetch(`http://localhost:5284/api/User/${id}`);

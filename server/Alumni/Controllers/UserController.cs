@@ -16,7 +16,7 @@ public class UserController : ControllerBase
         _context = context;
     }
 
-    [HttpPost("{id}/personal-info")]
+    [HttpPut("{id}")]
     public async Task<ActionResult<User>> Edit(int id, [FromBody] EditPersonalInfoDTO dto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
@@ -26,8 +26,10 @@ public class UserController : ControllerBase
             return NotFound();
         }
 
-        user.Name = dto.Name;
-        user.Login = dto.Email;
+        Task.Delay(1000).Wait();
+        user.Name = dto.Name ?? user.Name;
+        user.Login = dto.Email ?? user.Login;
+        user.Phone = dto.Phone ?? user.Phone;
 
         await _context.SaveChangesAsync();
 
@@ -46,4 +48,11 @@ public class UserController : ControllerBase
 
         return user;
     }
+}
+
+public class EditUserDTO
+{
+    public string? Name { get; set; }
+    public string? Email { get; set; }
+    public string? Phone { get; set; }
 }
