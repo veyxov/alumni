@@ -62,7 +62,7 @@ export default function Page() {
                     <div className="flex flex-col items-center justify-center">
                         <div className="w-full max-w-md">
                             <div className="flex flex-col break-words bg-white border-2 rounded shadow-md">
-                                <img class="w-20 h-20 rounded" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Large avatar"></img>
+                                <img className="w-20 h-20 rounded" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Large avatar"></img>
                                 <div className="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">
                                     Edit profile
                                 </div>

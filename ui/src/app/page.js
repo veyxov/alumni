@@ -55,7 +55,7 @@ export default function Home() {
 
                                         <div className="px-12 py-8 transition-colors duration-300 transform border cursor-pointer rounded-xl hover:border-transparent group hover:bg-blue-600 dark:border-gray-700 dark:hover:border-transparent">
                                             <div className="flex flex-col sm:-mx-4 sm:flex-row">
-                                                <img class="flex-shrink-0 object-cover w-24 h-24 rounded-full sm:mx-4 ring-4 ring-gray-300" src={person.image} alt="" />
+                                                <img className="flex-shrink-0 object-cover w-24 h-24 rounded-full sm:mx-4 ring-4 ring-gray-300" src={person.image} alt="" />
 
                                                 <div className="mt-4 sm:mx-4 sm:mt-0">
                                                     <h1 className="text-xl font-semibold text-gray-700 capitalize md:text-2xl dark:text-white group-hover:text-white">{person.name}</h1>
