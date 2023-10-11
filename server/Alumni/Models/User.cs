@@ -11,6 +11,8 @@ public class User : BaseEntity
     public string Email => Login;
     public DateTime? Birthday { get; set; }
     public Gender Gender { get; set; }
+
+    public string? AvatarPath { get; set; }
 }
 
 public enum Gender {
