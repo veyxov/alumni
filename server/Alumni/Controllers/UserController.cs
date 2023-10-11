@@ -36,6 +36,11 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
+    [HttpGet("top")]
+    public async Task<IActionResult> GetTopAsync() {
+        return Ok(await _context.Users.ToListAsync());
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> Get(int id)
     {
