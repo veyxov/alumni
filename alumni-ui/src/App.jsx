@@ -1,37 +1,16 @@
-import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Burger, Group, MantineProvider, Skeleton } from '@mantine/core';
+import LoginPage from "./routes/auth/login.jsx";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { Home } from "./routes/Home.jsx";
 
 export default function App() {
-    const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
-    const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-
-    return (
-        <MantineProvider>
-            <AppShell
-                header={{ height: 60 }}
-                navbar={{
-                    width: 300,
-                    breakpoint: 'sm',
-                    collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
-                }}
-                padding="md"
-            >
-                <AppShell.Header>
-                    <Group h="100%" px="md">
-                        <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
-                        <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
-                    </Group>
-                </AppShell.Header>
-                <AppShell.Navbar p="md">
-                    Navbar
-                    {Array(15)
-                        .fill(0)
-                        .map((_, index) => (
-                            <Skeleton key={index} h={28} mt="sm" animate={false} />
-                        ))}
-                </AppShell.Navbar>
-                <AppShell.Main>Main</AppShell.Main>
-            </AppShell>
-        </MantineProvider>
-    );
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Home />}>
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+      </Routes>
+    </>
+  );
 }
