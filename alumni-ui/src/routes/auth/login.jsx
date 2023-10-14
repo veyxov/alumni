@@ -1,5 +1,3 @@
-import { Outlet } from "react-router-dom";
-
 export default function LoginPage() {
   console.log("utsk");
   return (
